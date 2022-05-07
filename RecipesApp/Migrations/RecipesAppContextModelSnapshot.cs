@@ -42,7 +42,7 @@ namespace RecipesApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Appliances");
+                    b.ToTable("Appliances", (string)null);
                 });
 
             modelBuilder.Entity("RecipesApp.Models.FoodGroup", b =>
@@ -65,7 +65,7 @@ namespace RecipesApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FoodGroups");
+                    b.ToTable("FoodGroups", (string)null);
                 });
 
             modelBuilder.Entity("RecipesApp.Models.Ingredient", b =>
@@ -90,7 +90,7 @@ namespace RecipesApp.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("Ingredients", (string)null);
                 });
 
             modelBuilder.Entity("RecipesApp.Models.Product", b =>
@@ -135,7 +135,7 @@ namespace RecipesApp.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("RecipesApp.Models.Recipe", b =>
@@ -162,7 +162,7 @@ namespace RecipesApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
                 });
 
             modelBuilder.Entity("RecipesApp.Models.RecipeAppliance", b =>
@@ -182,7 +182,7 @@ namespace RecipesApp.Migrations
 
                     b.HasIndex("ApplianceId");
 
-                    b.ToTable("RecipeAppliance");
+                    b.ToTable("RecipeAppliance", (string)null);
                 });
 
             modelBuilder.Entity("RecipesApp.Models.Unit", b =>
@@ -203,7 +203,7 @@ namespace RecipesApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Units");
+                    b.ToTable("Units", (string)null);
                 });
 
             modelBuilder.Entity("RecipesApp.Models.Ingredient", b =>
