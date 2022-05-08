@@ -9,6 +9,7 @@ namespace RecipesApp.Data.Configurations
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.Property(p => p.Name)
+                .HasMaxLength(50)
                 .IsRequired();
 
             builder.HasOne(p => p.Unit)
@@ -21,18 +22,6 @@ namespace RecipesApp.Data.Configurations
 
             builder.Property(p => p.Owned)
                 .HasDefaultValue(false);
-
-            builder.Property(p => p.Amount)
-                .HasColumnType("float(10,2)");
-
-            builder.Property(p => p.Protein)
-                .HasColumnType("float(10,2)");
-
-            builder.Property(p => p.Carbohydrates)
-                .HasColumnType("float(10,2)");
-
-            builder.Property(p => p.Fat)
-                .HasColumnType("float(10,2)");
         }
     }
 }

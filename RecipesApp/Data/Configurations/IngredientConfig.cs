@@ -11,7 +11,6 @@ namespace RecipesApp.Data.Configurations
             builder.HasKey(t => new {t.ProductId, t.RecipeId});
 
             builder.Property(i => i.Amount)
-                .HasColumnType("float(10,2)")
                 .HasDefaultValue(1);
 
             builder.Property(i => i.Necessary)

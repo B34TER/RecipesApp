@@ -9,9 +9,11 @@ namespace RecipesApp.Data.Configurations
         public void Configure(EntityTypeBuilder<Unit> builder)
         {
             builder.Property(u => u.Name)
+                .HasMaxLength(20)
                 .IsRequired();
 
             builder.Property(u => u.Shortcut)
+                .HasMaxLength(5)
                 .IsRequired();
         }
     }
