@@ -28,7 +28,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Recipe.Instruction)
+                @Html.DisplayFor(modelItem => item.Recipe.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Appliance.Name)
@@ -37,9 +37,9 @@
                 @Html.DisplayFor(modelItem => item.Necessary)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new { recipeid=item.RecipeId, applianceid=item.ApplianceId }) |
+                @Html.ActionLink("Details", "Details", new { recipeid=item.RecipeId, applianceid=item.ApplianceId }) |
+                @Html.ActionLink("Delete", "Delete", new { recipeid=item.RecipeId, applianceid=item.ApplianceId })
             </td>
         </tr>
 }

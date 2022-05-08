@@ -28,9 +28,10 @@ namespace RecipesApp.Controllers
         }
 
         // GET: Ingredients/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [Route("Ingredients/Details/{productid:int}/{recipeid:int}")]
+        public async Task<IActionResult> Details(int? productid, int? recipeid)
         {
-            if (id == null)
+            if (productid == null || recipeid == null)
             {
                 return NotFound();
             }
@@ -38,7 +39,7 @@ namespace RecipesApp.Controllers
             var ingredient = await _context.Ingredients
                 .Include(i => i.Product)
                 .Include(i => i.Recipe)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+                .FirstOrDefaultAsync(m => m.RecipeId == recipeid && m.ProductId == productid);
             if (ingredient == null)
             {
                 return NotFound();
@@ -51,7 +52,7 @@ namespace RecipesApp.Controllers
         public IActionResult Create()
         {
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name");
-            ViewData["RecipeId"] = new SelectList(_context.Recipes, "Id", "Instruction");
+            ViewData["RecipeId"] = new SelectList(_context.Recipes, "Id", "Title");
             return View();
         }
 
@@ -69,25 +70,26 @@ namespace RecipesApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", ingredient.ProductId);
-            ViewData["RecipeId"] = new SelectList(_context.Recipes, "Id", "Instruction", ingredient.RecipeId);
+            ViewData["RecipeId"] = new SelectList(_context.Recipes, "Id", "Title", ingredient.RecipeId);
             return View(ingredient);
         }
 
         // GET: Ingredients/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [Route("Ingredients/Edit/{productid:int}/{recipeid:int}")]
+        public async Task<IActionResult> Edit(int? productid, int? recipeid)
         {
-            if (id == null)
+            if (productid == null || recipeid == null)
             {
                 return NotFound();
             }
 
-            var ingredient = await _context.Ingredients.FindAsync(id);
+            var ingredient = await _context.Ingredients.FindAsync(productid, recipeid);
             if (ingredient == null)
             {
                 return NotFound();
             }
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", ingredient.ProductId);
-            ViewData["RecipeId"] = new SelectList(_context.Recipes, "Id", "Instruction", ingredient.RecipeId);
+            ViewData["RecipeId"] = new SelectList(_context.Recipes, "Id", "Title", ingredient.RecipeId);
             return View(ingredient);
         }
 
@@ -95,10 +97,11 @@ namespace RecipesApp.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("Ingredients/Edit/{productid:int}/{recipeid:int}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,RecipeId,Amount,Necessary")] Ingredient ingredient)
+        public async Task<IActionResult> Edit(int productid, int recipeid, [Bind("ProductId,RecipeId,Amount,Necessary")] Ingredient ingredient)
         {
-            if (id != ingredient.ProductId)
+            if (productid != ingredient.ProductId || recipeid != ingredient.RecipeId)
             {
                 return NotFound();
             }
@@ -112,7 +115,7 @@ namespace RecipesApp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!IngredientExists(ingredient.ProductId))
+                    if (!IngredientExists(ingredient.ProductId, ingredient.RecipeId))
                     {
                         return NotFound();
                     }
@@ -124,14 +127,15 @@ namespace RecipesApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", ingredient.ProductId);
-            ViewData["RecipeId"] = new SelectList(_context.Recipes, "Id", "Instruction", ingredient.RecipeId);
+            ViewData["RecipeId"] = new SelectList(_context.Recipes, "Id", "Title", ingredient.RecipeId);
             return View(ingredient);
         }
 
         // GET: Ingredients/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [Route("Ingredients/Delete/{productid:int}/{recipeid:int}")]
+        public async Task<IActionResult> Delete(int? productid, int? recipeid)
         {
-            if (id == null)
+            if (productid == null || recipeid == null)
             {
                 return NotFound();
             }
@@ -139,7 +143,7 @@ namespace RecipesApp.Controllers
             var ingredient = await _context.Ingredients
                 .Include(i => i.Product)
                 .Include(i => i.Recipe)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+                .FirstOrDefaultAsync(m => m.RecipeId == recipeid && m.ProductId == productid);
             if (ingredient == null)
             {
                 return NotFound();
@@ -150,18 +154,19 @@ namespace RecipesApp.Controllers
 
         // POST: Ingredients/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Route("Ingredients/Delete/{productid:int}/{recipeid:int}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int productid, int recipeid)
         {
-            var ingredient = await _context.Ingredients.FindAsync(id);
+            var ingredient = await _context.Ingredients.FindAsync(productid, recipeid);
             _context.Ingredients.Remove(ingredient);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool IngredientExists(int id)
+        private bool IngredientExists(int productid, int recipeid)
         {
-            return _context.Ingredients.Any(e => e.ProductId == id);
+            return _context.Ingredients.Any(e => e.ProductId == productid && e.RecipeId == recipeid);
         }
     }
 }

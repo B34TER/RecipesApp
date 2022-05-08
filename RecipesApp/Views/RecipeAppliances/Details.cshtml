@@ -14,7 +14,7 @@
             @Html.DisplayNameFor(model => model.Recipe)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Recipe.Instruction)
+            @Html.DisplayFor(model => model.Recipe.Title)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Appliance)
@@ -31,6 +31,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { recipeid=Model.RecipeId, applianceid=Model.ApplianceId }) |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -35,6 +35,11 @@ namespace RecipesApp.Controllers
             }
 
             var recipe = await _context.Recipes
+                .Include("Ingredients")
+                .Include("Ingredients.Product")
+                .Include("Ingredients.Product.Unit")
+                .Include("RecipeAppliances")
+                .Include("RecipeAppliances.Appliance")
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (recipe == null)
             {
